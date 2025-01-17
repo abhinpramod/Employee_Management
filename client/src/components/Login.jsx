@@ -6,6 +6,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
@@ -17,9 +19,38 @@ const Login = () => {
     }
   }, [navigate]);
 
+  const validateForm = () => {
+    let valid = true;
+    if (!email) {
+      setEmailError('Email is required');
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      setEmailError('Please enter a valid email');
+      valid = false;
+    } else {
+      setEmailError('');
+    }
+
+    if (!password) {
+      setPasswordError('Password is required');
+      valid = false;
+    } else if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters');
+      valid = false;
+    } else {
+      setPasswordError('');
+    }
+
+    return valid;
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (!validateForm()) {
+      return; // Stop if form validation fails
+    }
 
     try {
       const response = await axios.post(`http://localhost:5000/api/auth/`, {
@@ -52,21 +83,21 @@ const Login = () => {
               <label style={{ fontSize: '1.1rem' }}>Email:</label>
               <input
                 type="text"
-                className="form-control"
+                className={`form-control ${emailError ? 'is-invalid' : ''}`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-      
               />
+              {emailError && <div className="invalid-feedback">{emailError}</div>}
             </div>
             <div className="form-group mb-3">
               <label style={{ fontSize: '1.1rem' }}>Password:</label>
               <input
                 type="password"
-                className="form-control"
+                className={`form-control ${passwordError ? 'is-invalid' : ''}`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-              
               />
+              {passwordError && <div className="invalid-feedback">{passwordError}</div>}
             </div>
             {error && <p className="text-danger text-center" style={{ fontSize: "1.2rem" }}>{error}</p>}
             <button type="submit" className="btn btn-success d-block mx-auto">
