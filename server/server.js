@@ -7,14 +7,14 @@ const { authenticate } = require("./Middleware/authenticateToken");
 const app = express();
 require("dotenv").config();
 
-mongoose.connect(process.env.MONGO_URI, {
- 
-  
-}).then(() => {
-  console.log("Connected to MongoDB");
-}).catch((error) => {
-  console.error("Error connecting to MongoDB:", error);
-});
+mongoose
+  .connect(process.env.MONGO_URI, {})
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
 
 app.use(express.json());
 app.use(
