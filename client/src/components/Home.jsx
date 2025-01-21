@@ -76,16 +76,25 @@ const Home = () => {
   return (
     <div>
       {/* MUI Navbar with AppBar */}
-      <AppBar position="static" sx={{ backgroundColor: '#386f6e', width: "100%" }}>
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: "#386f6e", width: "100%" }}
+      >
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Employee Management
           </Typography>
-          <Button sx={{ backgroundColor: '#ca447c', color: '#fff' }} onClick={openDialog}>
+          <Button
+            sx={{ backgroundColor: "#ca447c", color: "#fff" }}
+            onClick={openDialog}
+          >
             Add Employee
           </Button>
           &nbsp;&nbsp;&nbsp;
-          <Button sx={{ backgroundColor: '#ff0000', color: '#fff' }} onClick={handleLogout}>
+          <Button
+            sx={{ backgroundColor: "#ff0000", color: "#fff" }}
+            onClick={handleLogout}
+          >
             Logout
           </Button>
         </Toolbar>
@@ -126,7 +135,9 @@ const Home = () => {
       <Dialog open={confirmOpen} onClose={closeConfirmDialog}>
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>
-          <Typography>Are you sure you want to delete this employee?</Typography>
+          <Typography>
+            Are you sure you want to delete this employee?
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={closeConfirmDialog} color="secondary">
