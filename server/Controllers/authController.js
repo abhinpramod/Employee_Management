@@ -9,11 +9,11 @@ const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/;
 const register = async (req, res) => {
   const { email, password } = req.body;
 
-  if(!email){
-    return res.status(400).json({message: "please enter your email" })
+  if (!email) {
+    return res.status(400).json({ message: "please enter your email" });
   }
-  if(!password){
-    return res.status(400).json({message: "please enter your password" })
+  if (!password) {
+    return res.status(400).json({ message: "please enter your password" });
   }
 
   if (!emailRegex.test(email)) {
@@ -21,12 +21,10 @@ const register = async (req, res) => {
   }
 
   if (!passwordRegex.test(password)) {
-    return res
-      .status(400)
-      .json({
-        message:
-          "Password must be at least 6 characters long, contain at least one letter, one number, and one special character",
-      });
+    return res.status(400).json({
+      message:
+        "Password must be at least 6 characters long, contain at least one letter, one number, and one special character",
+    });
   }
 
   try {
@@ -47,22 +45,18 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
- 
 
   if (!email || !password) {
     return res.status(400).json({ message: "Email and password are required" });
   }
 
-  
-
   const user = await User.findOne({ email });
   if (!user) {
     return res.status(401).json({ message: "Invalid email " });
   }
-  if (!await bcrypt.compare(password, user.password)) {
+  if (!(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ message: "Invalid password " });
   }
-  
 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
   res.json({ token });

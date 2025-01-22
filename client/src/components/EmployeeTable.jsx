@@ -1,18 +1,18 @@
 // export default EmployeeTable;
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const EmployeeTable = ({ employees, onDelete, fetchEmployees, token }) => {
   const [editingId, setEditingId] = useState(null); // track the employee being edited
-  const [editName, setEditName] = useState('');
-  const [editPosition, setEditPosition] = useState('');
-  const [editContact, setEditContact] = useState('');
+  const [editName, setEditName] = useState("");
+  const [editPosition, setEditPosition] = useState("");
+  const [editContact, setEditContact] = useState("");
   const [error, setError] = useState(null); // handle errors
 
   // function to handle when the edit button is clicked
   const startEditing = (employee) => {
     console.log(employee);
-    
+
     setEditingId(employee._id);
     setEditName(employee.name);
     setEditPosition(employee.position);
@@ -26,15 +26,18 @@ const EmployeeTable = ({ employees, onDelete, fetchEmployees, token }) => {
         `http://localhost:5000/api/employees/${editingId}`,
         { name: editName, position: editPosition, contact: editContact },
         {
-          headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
-      fetchEmployees(); 
-      setEditingId(null); 
+      fetchEmployees();
+      setEditingId(null);
       // exit editing mode
-      setError('')
+      setError("");
     } catch (error) {
-      setError(error.response?.data?.error || 'Failed to update employee');
+      setError(error.response?.data?.error || "Failed to update employee");
     }
   };
 
@@ -82,10 +85,16 @@ const EmployeeTable = ({ employees, onDelete, fetchEmployees, token }) => {
                       />
                     </td>
                     <td>
-                      <button className="btn btn-success me-2" onClick={handleEditSave}>
+                      <button
+                        className="btn btn-success me-2"
+                        onClick={handleEditSave}
+                      >
                         Save
                       </button>
-                      <button className="btn btn-secondary" onClick={() => setEditingId(null)}>
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => setEditingId(null)}
+                      >
                         Cancel
                       </button>
                     </td>
@@ -96,10 +105,16 @@ const EmployeeTable = ({ employees, onDelete, fetchEmployees, token }) => {
                     <td>{employee.position}</td>
                     <td>{employee.contact}</td>
                     <td>
-                      <button className="btn btn-primary me-2" onClick={() => startEditing(employee)}>
+                      <button
+                        className="btn btn-primary me-2"
+                        onClick={() => startEditing(employee)}
+                      >
                         Edit
                       </button>
-                      <button className="btn btn-danger" onClick={() => onDelete(employee._id)}>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => onDelete(employee._id)}
+                      >
                         Delete
                       </button>
                     </td>

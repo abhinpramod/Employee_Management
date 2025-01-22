@@ -1,42 +1,42 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const AddEmployee = ({ token, fetchEmployees, setOpen }) => {
-  const [name, setName] = useState('');
-  const [position, setPosition] = useState('');
-  const [contact, setContact] = useState('');
-  const [error, setError] = useState('');
+  const [name, setName] = useState("");
+  const [position, setPosition] = useState("");
+  const [contact, setContact] = useState("");
+  const [error, setError] = useState("");
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     // Prepare the employee data
     const employee = { name, position, contact };
 
     try {
       // Make the API call to add the employee
-      await axios.post('http://localhost:5000/api/employees', employee, {
-        headers: { 
-          'Authorization': `Bearer ${token}`, 
-          'Content-Type': 'application/json' 
-        }
+      await axios.post("http://localhost:5000/api/employees", employee, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
 
       // Fetch updated employee list
       fetchEmployees();
 
       // Reset error and close modal
-      setError('');
+      setError("");
       setOpen(false); // Close the modal after adding the employee
 
       // Clear input fields
-      setName('');
-      setPosition('');
-      setContact('');
+      setName("");
+      setPosition("");
+      setContact("");
     } catch (error) {
       // Handle errors
-      setError(error.response?.data?.error || 'Failed to add employee');
+      setError(error.response?.data?.error || "Failed to add employee");
     }
   };
 
@@ -71,7 +71,9 @@ const AddEmployee = ({ token, fetchEmployees, setOpen }) => {
       </div>
       {error && <p className="text-danger">{error}</p>}
       <br />
-      <button type="submit" className="btn btn-success w-100">Add Employee</button>
+      <button type="submit" className="btn btn-success w-100">
+        Add Employee
+      </button>
     </form>
   );
 };
