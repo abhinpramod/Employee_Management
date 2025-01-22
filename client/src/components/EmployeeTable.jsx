@@ -35,7 +35,7 @@ const EmployeeTable = ({ employees, onDelete, fetchEmployees, token }) => {
       fetchEmployees();
       setEditingId(null);
       // exit editing mode
-      setError("");
+      setError(" ");
     } catch (error) {
       setError(error.response?.data?.error || "Failed to update employee");
     }

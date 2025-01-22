@@ -52,7 +52,7 @@ const Register = () => {
 
     if (!validatePassword(password)) {
       setError(
-        "Password must be at least 8 characters long, include an uppercase letter, a number, and a special character."
+        "Password must be at least 8 characters long, include an uppercase letter, a number, and a special character"
       );
       return;
     }
